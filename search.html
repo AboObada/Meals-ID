@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yummy</title>
+    <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/animate.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/media.css" />
+</head>
+
+<body>
+
+    <div class="loading-screen position-fixed top-0 start-0 end-0 bottom-0 bg-black justify-content-center align-items-center" style="display: none;">
+        <i class="fa fa-spinner fa-spin fa-5x"></i>
+    </div>
+    <section class="home" id="home">
+
+        <div id="mySidenav" class="sidenav">
+            <div class="links d-flex flex-column align-items-center justify-content-between">
+                <!-- <a class="closebtn" onclick="closeNav()">×</a> -->
+                <div class="pages d-flex flex-column me-auto">
+                    <a class="wow slideInUp" data-wow-duration="1s" data-wow-delay="1.2s" href="search.html">Search</a>
+                    <a class="wow slideInUp" data-wow-duration="1s" data-wow-delay="1.4s" href="categories.html">Categories</a>
+                    <a class="wow slideInUp" data-wow-duration="1s" data-wow-delay="1.6s" href="area.html">Area</a>
+                    <a class="wow slideInUp" data-wow-duration="1s" data-wow-delay="1.8s" href="ingradient.html">Ingradient</a>
+                    <a class="wow slideInUp" data-wow-duration="1s" data-wow-delay="2s" href="contact.html">Contact Us</a>
+                </div>
+                <div class="social">
+                    <ul class="d-flex">
+                        <li><i class="fa-brands fa-facebook"></i></li>
+                        <li><i class="fa-brands fa-twitter"></i></li>
+                        <li><i class="fa-solid fa-globe"></i></li>
+                    </ul>
+                    <p>Copyright Â© 2019 All Rights </p>
+                </div>
+            </div>
+            <div class="close-open d-flex flex-column align-items-center justify-content-between">
+                <figure>
+                    <img src="images/logo.png" alt="logo" />
+                </figure>
+                <span id="test" onclick="open_close_side()"><i class="fa-solid fa-align-justify" id="open-close-icon"></i></span>
+                <div class="icons d-flex flex-column align-items-center justify-content-center">
+                    <i class="fa-solid fa-globe d-block"></i>
+                    <i class="fa-solid fa-share-nodes"></i>
+                </div>
+            </div>
+        </div>
+        <div class="home-content">
+            <div class="container">
+                <div class="row p-5">
+                    <div class="col-md-6 col-sm-12">
+                        <input id="searchName" type="search" oninput="searchByName()" class="form-control bg-transparent text-white" placeholder="Search By Name">
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <input id="searchByFL" maxlength="1" type="search" oninput="searchByName()" class="form-control bg-transparent text-white" placeholder="Search By First letter">
+                    </div>
+                </div>
+                <div class="search-box">
+                    <div class="row g-4">
+                        <div class="col-md-3 col-sm-12">
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/jquery-3.6.4.min.js"></script>
+    <Script src="js/bootstrap.bundle.min.js"></Script>
+    <Script src="js/all.min.js"></Script>
+    <script src="js/wow.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        async function searchByName() {
+            let term = document.getElementById('searchName').value;
+            let apiResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`);
+            let searchData = await apiResponse.json();
+            displaySearch(searchData.meals)
+
+        };
+        
+        function displaySearch(meals) {
+            let mealBox = ``;
+            for (let i = 0; i < meals.length; i++) {
+                mealBox += `<div class="col-md-3 col-sm-12">
+                    <a href="meal_details.html?id=${meals[i].idMeal}"> 
+                        <div class="item">
+                            <img style="border-radius:10px" src="${meals[i].strMealThumb}" class="w-100" alt="">
+                            <div class="layer p-2 d-flex">
+                                <h2 class="text-left align-self-center">${meals[i].strMeal}</h2>
+                            </div> 
+                        </div>
+                    </a>   </div>` 
+             
+                $('.search-box .row').html(mealBox);
+            }
+        }
+    </script>
+</body>
+
+</html>

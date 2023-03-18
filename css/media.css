@@ -1,0 +1,5 @@
+@media (max-width: 567px) {
+    input {
+        margin-top: 1rem !important;
+    }
+}

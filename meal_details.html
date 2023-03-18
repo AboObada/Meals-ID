@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yummy</title>
+    <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/animate.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/media.css">
+</head>
+
+<body>
+
+    <section class="home" id="home">
+        <div class="container">
+            <div class="details pt-5">
+                <div class="row">
+                    <div class="col-md-4 col-sm-12">
+                        <img src="" alt="" class="w-100 rounded-3">
+                        <h2 class="text-white"></h2>
+                    </div>
+                    <div class="col-md-8 col-sm-12">
+                        <h3 class="text-white"></h3>
+                        <p class="text-white"></p>
+                        <ul>
+                            <li class="d-flex">
+                                <h2 class="text-white border-5">Area : </h2>
+                                <h3 class="text-white"></h3>
+                            </li>
+                            <li class="d-flex">
+                                <h2 class="text-white border-5">Category : </h2>
+                                <h3 class="text-white"></h3>
+                            </li>
+                            <li class="d-flex">
+                                <h2 class="text-white border-5">Recipes : </h2>
+                                <div class="recipes">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="box"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/jquery-3.6.4.min.js"></script>
+    <Script src="js/bootstrap.bundle.min.js"></Script>
+    <Script src="js/all.min.js"></Script>
+    <script src="js/wow.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        $( document ).ready(function() {
+            var url = window.location.href;
+            var meal_id = url.split("id=")[1];
+            getDetails(meal_id);
+            
+        });
+
+        async function getDetails(meal_id) {
+            let apiResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal_id}`);
+
+            let gateDetailData = await apiResponse.json();
+            console.log(gateDetailData);
+            displayDetails(gateDetailData);
+        }
+        
+        function displayDetails(gateDetailData) {
+            let mealBox = ``;
+            mealBox += ` <div class="row">
+                    <div class="col-md-4 col-sm-12">
+                        <img src="${gateDetailData.meals[0].strMealThumb}" alt="" class="w-100 rounded-3">
+                        <h2 class="text-white">${gateDetailData.meals[0].strMeal}</h2>
+                    </div>
+                    <div class="col-md-8 col-sm-12">
+                        <h3 class="text-white">Instructions</h3>
+                        <p class="text-white">${gateDetailData.meals[0].strInstructions}</p>
+                        <ul>
+                            <li class="d-flex align-items-center">
+                                <h2 class="text-white border-5">Area :&nbsp </h2>
+                                <h3 class="text-white"> ${gateDetailData.meals[0].strArea}</h3>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <h2 class="text-white border-5">Category :&nbsp</h2>
+                                <h3 class="text-white">${gateDetailData.meals[0].strCategory}</h3>
+                            </li>
+                            <li>
+                                <h2 class="text-white border-5">Recipes : </h2>
+                                
+                            </li>
+                        </ul>
+                    </div>
+                </div>`
+                $('.details').html(mealBox);
+                console.log(mealBox);
+        }
+    </script>
+</body>
+
+</html>
